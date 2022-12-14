@@ -1,6 +1,5 @@
 import React from "react";
 
-
 export const ToDoSetter = ({input, setInput, onAdd}) => {
     const handleEnterPress = event => {
         if (event.keyCode === 13) {
