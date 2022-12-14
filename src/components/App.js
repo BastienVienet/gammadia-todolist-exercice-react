@@ -10,6 +10,13 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   min-height: 100vh;
+  li {
+    display: flex;
+    flex-direction: row;
+    button {
+      margin-left: 10px;
+    }
+  }
 `
 
 export const App = () => {
@@ -17,36 +24,28 @@ export const App = () => {
     const savedToDoList = localStorage.getItem('toDoList')
     const [toDoList, setToDoList] = useState(savedToDoList ? JSON.parse(savedToDoList): [])
     const [input, setInput] = useState("")
-    const {triggerAlert} = useToDo()
+    const {addToDo, deleteToDo, editToDo, checkToDo} = useToDo(setToDoList, toDoList, setInput)
 
     useEffect(() => {
         localStorage.setItem('toDoList', JSON.stringify(toDoList));
     }, [toDoList])
 
-    const addTodo = (todo) => {
-        const newTodo = {
-            id: Math.floor(Math.random() * 10000),
-            text: todo
-        };
-        // Add the to-do to the list
-        setToDoList(([...toDoList, newTodo]));
-        // Clear input box
-        setInput('');
-        triggerAlert(newTodo.id + ' - ' + todo);
-    }
-
-    const deleteTodo = (id) => {
-        const newToDoList = toDoList.filter((todo) => todo.id !== id);
-        setToDoList(newToDoList);
-    }
-
     return (
         <Container>
             <h1>To do list</h1>
-            <ToDoSetter onAdd={addTodo} input={input} setInput={setInput}></ToDoSetter>
+            <ToDoSetter
+                onAdd={addToDo}
+                input={input}
+                setInput={setInput}>
+            </ToDoSetter>
             <ul>
                 {toDoList.map((todo, index) => {
-                    return <ToDoItem key={index} todo={todo} onDelete={deleteTodo}></ToDoItem>
+                    return <ToDoItem
+                        key={index}
+                        todo={todo}
+                        onDelete={deleteToDo}
+                        onCheckToDo={checkToDo}>
+                    </ToDoItem>
                 })}
             </ul>
         </Container>
