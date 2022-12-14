@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ToDoSetter = ({onAdd, input, setInput, toDoEditing, editingText, setEditingText}) => {
+export const ToDoSetter = ({onAdd, input, setInput}) => {
     const handleEnterPress = event => {
         if (event.keyCode === 13) {
             onAdd(input);
@@ -8,12 +8,13 @@ export const ToDoSetter = ({onAdd, input, setInput, toDoEditing, editingText, se
     };
 
     return (
-        <div>
+        <> {/*same than React.Fragment */}
             <input onKeyDown={handleEnterPress}
                    type="text"
                    value={input}
                    onChange={(event) => setInput(event.target.value)}
             />
-        </div>
+            <button onClick={() => onAdd(input)}>Add</button>
+        </>
     )
 }
