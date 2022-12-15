@@ -24,6 +24,7 @@ export const App = () => {
     const savedToDoList = localStorage.getItem('toDoList')
     const [toDoList, setToDoList] = useState(savedToDoList ? JSON.parse(savedToDoList): [])
     const [input, setInput] = useState("")
+    const [filter, setFilter] = useState("all")
     const {addToDo, deleteToDo, editToDo, checkToDo} = useToDo(setToDoList, toDoList, setInput)
 
     useEffect(() => {
@@ -33,6 +34,13 @@ export const App = () => {
     return (
         <Container>
             <h1>To do list</h1>
+            <>
+                <select name="is_done" onChange={event => setFilter(event.target.value)}>
+                    <option value="all">All</option>
+                    <option value="completed">Completed</option>
+                    <option value="to_be_done">To be done</option>
+                </select>
+            </>
             <ToDoSetter
                 onAdd={addToDo}
                 input={input}
@@ -44,7 +52,9 @@ export const App = () => {
                         key={index}
                         todo={todo}
                         onDelete={deleteToDo}
-                        onCheckToDo={checkToDo}>
+                        onEdit={editToDo}
+                        onCheckToDo={checkToDo}
+                        filter={filter}>
                     </ToDoItem>
                 })}
             </ul>

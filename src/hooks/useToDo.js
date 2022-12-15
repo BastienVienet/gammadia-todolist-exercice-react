@@ -16,18 +16,24 @@ export const useToDo = (setToDoList, toDoList, setInput) => {
         setToDoList(newToDoList);
     }
 
-    const editToDo = (id) => {
-
+    const editToDo = (id, newText) => {
+        const updatedToDoList = [...toDoList].map((todo) => {
+            if (todo.id === id) {
+                todo.text = newText
+            }
+            return todo
+        })
+    setToDoList(updatedToDoList)
     }
 
     const checkToDo = (id) => {
-        const updatedToDo = [...toDoList].map((todo) => {
+        const checkedToDoList = [...toDoList].map((todo) => {
             if (todo.id === id) {
                 todo.completed = !todo.completed
             }
             return todo
         })
-        setToDoList(updatedToDo);
+        setToDoList(checkedToDoList);
     }
 
     return {addToDo, deleteToDo, editToDo, checkToDo}
