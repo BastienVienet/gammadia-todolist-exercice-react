@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const StyledListItem = styled.li`
-  ${(props) => props.checked ? "text-decoration-line: line-through;" : ""}
+const StyledListItem = styled.li<{completed?: boolean }>`
+  ${({completed = false}) => completed ? "text-decoration-line: line-through;" : ""}
   
   display: flex;
   flex: 0 0 auto;

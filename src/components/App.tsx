@@ -5,6 +5,7 @@ import {ToDoSetter} from "./ToDoSetter";
 import {useToDo} from "../hooks/useToDo";
 import StyledList from "../styles/List";
 import StyledSelect from "../styles/Select";
+import {Todo} from "../types"
 
 const Container = styled.div`
   display: flex;
@@ -22,10 +23,11 @@ const Container = styled.div`
 export const App = () => {
 
     const savedToDoList = localStorage.getItem('toDoList')
-    const [toDoList, setToDoList] = useState(savedToDoList ? JSON.parse(savedToDoList) : [])
+    const initialToDoList: Todo[] = savedToDoList ? JSON.parse(savedToDoList) : []
+    const [toDoList, setToDoList] = useState(initialToDoList)
     const [input, setInput] = useState("")
     const [filter, setFilter] = useState("all")
-    const {addToDo, deleteToDo, editToDo, checkToDo} = useToDo(setToDoList, toDoList, setInput)
+    const {addToDo, deleteToDo, editToDo, checkToDo} = useToDo({setToDoList, toDoList, setInput})
 
     useEffect(() => {
         localStorage.setItem('toDoList', JSON.stringify(toDoList));
@@ -38,8 +40,8 @@ export const App = () => {
                 <ToDoSetter
                     onAdd={addToDo}
                     input={input}
-                    setInput={setInput}>
-                </ToDoSetter>
+                    setInput={setInput}
+                />
             </div>
             <StyledSelect name="is_done" onChange={event => setFilter(event.target.value)}>
                 <option value="all">All</option>
@@ -47,15 +49,15 @@ export const App = () => {
                 <option value="to_be_done">To be done</option>
             </StyledSelect>
             <StyledList>
-                {toDoList.map((todo, index) => {
+                {toDoList.map((todo: Todo, index: number) => {
                     return <ToDoItem
                         key={index}
                         todo={todo}
                         onDelete={deleteToDo}
                         onEdit={editToDo}
                         onCheckToDo={checkToDo}
-                        filter={filter}>
-                    </ToDoItem>
+                        filter={filter}
+                    />
                 })}
             </StyledList>
         </Container>

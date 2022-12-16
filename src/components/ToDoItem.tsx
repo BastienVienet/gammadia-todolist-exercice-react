@@ -5,6 +5,7 @@ import StyledListItem from "../styles/ListItem";
 import StyledCheckbox from "../styles/Checkbox";
 import StyledInput from "../styles/Input";
 import styled from "styled-components";
+import {Todo} from "../types"
 
 const MyInput = styled(StyledInput)`
   display: inline;
@@ -13,11 +14,19 @@ const MyInput = styled(StyledInput)`
   width: 300px;
 `
 
-export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}) => {
+type Props = {
+    todo: Todo
+    onDelete: (id: number) => void
+    onEdit: (id: number, value: string) => void
+    onCheckToDo: (id: number) => void
+    filter: string
+}
+
+export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}: Props) => {
 
     const [isEditing, setIsEditing] = useState(false)
     const todoOldTextRef = useRef(null);
-    const inputTextRef = useRef(null);
+    const inputTextRef = useRef<HTMLInputElement>(null);
 
     if ((filter === "completed" && !todo.completed) || (filter === "to_be_done" && todo.completed)) {
         return null
@@ -27,11 +36,12 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}) => {
         (isEditing) ? (
             <StyledListItem>
                 <MyInput ref={inputTextRef}
-                       type="text"
-                       defaultValue={todo.text}
+                         type="text"
+                         defaultValue={todo.text}
                 />
                 <div className="ml-auto">
                     <StyledButton onClick={() => {
+                        if (!inputTextRef.current) return
                         onEdit(todo.id, inputTextRef.current.value)
                         setIsEditing(false)
                     }
@@ -40,7 +50,7 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}) => {
                 </div>
             </StyledListItem>
         ) : (
-            <StyledListItem checked={todo.completed}>
+            <StyledListItem completed={todo.completed}>
                 <StyledCheckbox
                     type="checkbox"
                     checked={todo.completed}

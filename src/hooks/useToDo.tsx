@@ -1,9 +1,17 @@
-export const useToDo = (setToDoList, toDoList, setInput) => {
-    const addToDo = (todo) => {
+import {Todo} from "../types"
+
+type Props = {
+    setToDoList: (TodoList: Todo[]) => void
+    toDoList: Todo[]
+    setInput: (value: string) => void
+}
+
+export const useToDo = ({setToDoList, toDoList, setInput}: Props) => {
+    const addToDo = (todo: string) => {
         const newTodo = {
             id: Math.floor(Math.random() * 10000),
             text: todo,
-            completed : false
+            completed: false
         };
         // Add the to-do to the list
         setToDoList(([...toDoList, newTodo]));
@@ -11,22 +19,22 @@ export const useToDo = (setToDoList, toDoList, setInput) => {
         setInput('');
     }
 
-    const deleteToDo = (id) => {
-        const newToDoList = toDoList.filter((todo) => todo.id !== id);
+    const deleteToDo = (id: number) => {
+        const newToDoList = toDoList.filter((todo: Todo) => todo.id !== id);
         setToDoList(newToDoList);
     }
 
-    const editToDo = (id, newText) => {
+    const editToDo = (id: number, newText: string) => {
         const updatedToDoList = [...toDoList].map((todo) => {
             if (todo.id === id) {
                 todo.text = newText
             }
             return todo
         })
-    setToDoList(updatedToDoList)
+        setToDoList(updatedToDoList)
     }
 
-    const checkToDo = (id) => {
+    const checkToDo = (id: number) => {
         const checkedToDoList = [...toDoList].map((todo) => {
             if (todo.id === id) {
                 todo.completed = !todo.completed
