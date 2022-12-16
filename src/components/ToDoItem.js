@@ -3,7 +3,15 @@ import {MdCancel, MdDelete, MdEdit, MdSave} from 'react-icons/md'
 import StyledButton from "../styles/Button";
 import StyledListItem from "../styles/ListItem";
 import StyledCheckbox from "../styles/Checkbox";
+import StyledInput from "../styles/Input";
+import styled from "styled-components";
 
+const MyInput = styled(StyledInput)`
+  display: inline;
+  margin-left: 57px;
+  min-width: 0;
+  width: 300px;
+`
 
 export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}) => {
 
@@ -18,7 +26,7 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}) => {
     return (
         (isEditing) ? (
             <StyledListItem>
-                <input ref={inputTextRef}
+                <MyInput ref={inputTextRef}
                        type="text"
                        defaultValue={todo.text}
                 />

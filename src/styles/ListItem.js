@@ -4,8 +4,9 @@ const StyledListItem = styled.li`
   ${(props) => props.checked ? "text-decoration-line: line-through;" : ""}
   
   display: flex;
-  flex-direction: row;
+  flex: 0 0 auto;
   justify-content: flex-start;
+  align-items: center;
   padding: 16px 20px ;
   border-bottom: 1px solid #eee;
   background: white;
