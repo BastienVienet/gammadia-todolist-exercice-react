@@ -3,6 +3,8 @@ import styled from "styled-components";
 import {ToDoItem} from "./ToDoItem";
 import {ToDoSetter} from "./ToDoSetter";
 import {useToDo} from "../hooks/useToDo";
+import StyledList from "../styles/List";
+import StyledSelect from "../styles/Select";
 
 const Container = styled.div`
   display: flex;
@@ -10,19 +12,17 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   min-height: 100vh;
-  li {
-    display: flex;
-    flex-direction: row;
-    button {
-      margin-left: 10px;
-    }
+
+  .ml-auto {
+    margin-left: auto;
+    margin-right: 0;
   }
 `
 
 export const App = () => {
 
     const savedToDoList = localStorage.getItem('toDoList')
-    const [toDoList, setToDoList] = useState(savedToDoList ? JSON.parse(savedToDoList): [])
+    const [toDoList, setToDoList] = useState(savedToDoList ? JSON.parse(savedToDoList) : [])
     const [input, setInput] = useState("")
     const [filter, setFilter] = useState("all")
     const {addToDo, deleteToDo, editToDo, checkToDo} = useToDo(setToDoList, toDoList, setInput)
@@ -34,19 +34,19 @@ export const App = () => {
     return (
         <Container>
             <h1>To do list</h1>
-            <>
-                <select name="is_done" onChange={event => setFilter(event.target.value)}>
-                    <option value="all">All</option>
-                    <option value="completed">Completed</option>
-                    <option value="to_be_done">To be done</option>
-                </select>
-            </>
-            <ToDoSetter
-                onAdd={addToDo}
-                input={input}
-                setInput={setInput}>
-            </ToDoSetter>
-            <ul>
+            <div>
+                <ToDoSetter
+                    onAdd={addToDo}
+                    input={input}
+                    setInput={setInput}>
+                </ToDoSetter>
+            </div>
+            <StyledSelect name="is_done" onChange={event => setFilter(event.target.value)}>
+                <option value="all">All</option>
+                <option value="completed">Completed</option>
+                <option value="to_be_done">To be done</option>
+            </StyledSelect>
+            <StyledList>
                 {toDoList.map((todo, index) => {
                     return <ToDoItem
                         key={index}
@@ -57,7 +57,7 @@ export const App = () => {
                         filter={filter}>
                     </ToDoItem>
                 })}
-            </ul>
+            </StyledList>
         </Container>
     );
 }

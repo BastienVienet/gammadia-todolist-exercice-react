@@ -1,11 +1,9 @@
 import {useRef, useState} from "react";
-import styled from "styled-components";
-import StyledButton from "../styles/Button";
 import {MdCancel, MdDelete, MdEdit, MdSave} from 'react-icons/md'
+import StyledButton from "../styles/Button";
+import StyledListItem from "../styles/ListItem";
+import StyledCheckbox from "../styles/Checkbox";
 
-const ToggleLi = styled.li`
-  ${(props) => props.checked ? "text-decoration-line: line-through;" : ""}
-`
 
 export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}) => {
 
@@ -19,29 +17,33 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}) => {
 
     return (
         (isEditing) ? (
-            <li>
+            <StyledListItem>
                 <input ref={inputTextRef}
                        type="text"
                        defaultValue={todo.text}
                 />
-                <StyledButton onClick={() => {
-                    onEdit(todo.id, inputTextRef.current.value)
-                    setIsEditing(false)
-                }
-                }><MdSave></MdSave></StyledButton>
-                <StyledButton onClick={() => setIsEditing(false)}><MdCancel></MdCancel></StyledButton>
-            </li>
+                <div className="ml-auto">
+                    <StyledButton onClick={() => {
+                        onEdit(todo.id, inputTextRef.current.value)
+                        setIsEditing(false)
+                    }
+                    }><MdSave></MdSave></StyledButton>
+                    <StyledButton onClick={() => setIsEditing(false)}><MdCancel></MdCancel></StyledButton>
+                </div>
+            </StyledListItem>
         ) : (
-            <ToggleLi checked={todo.completed}>
-                <input
+            <StyledListItem checked={todo.completed}>
+                <StyledCheckbox
                     type="checkbox"
                     checked={todo.completed}
                     onChange={() => onCheckToDo(todo.id)}
-                ></input>
+                ></StyledCheckbox>
                 <div ref={todoOldTextRef}>{todo.text}</div>
-                <StyledButton onClick={() => onDelete(todo.id)}><MdDelete></MdDelete></StyledButton>
-                <StyledButton onClick={() => setIsEditing(true)}><MdEdit></MdEdit></StyledButton>
-            </ToggleLi>
+                <div className="ml-auto">
+                    <StyledButton onClick={() => onDelete(todo.id)}><MdDelete></MdDelete></StyledButton>
+                    <StyledButton onClick={() => setIsEditing(true)}><MdEdit></MdEdit></StyledButton>
+                </div>
+            </StyledListItem>
         )
     )
 }

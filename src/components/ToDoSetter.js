@@ -1,4 +1,6 @@
 import React from "react";
+import StyledButton from "../styles/Button";
+import StyledInput from "../styles/Input";
 
 export const ToDoSetter = ({onAdd, input, setInput}) => {
     const handleEnterPress = event => {
@@ -9,12 +11,12 @@ export const ToDoSetter = ({onAdd, input, setInput}) => {
 
     return (
         <> {/*same than React.Fragment */}
-            <input onKeyDown={handleEnterPress}
+            <StyledInput onKeyDown={handleEnterPress}
                    type="text"
                    value={input}
                    onChange={(event) => setInput(event.target.value)}
             />
-            <button onClick={() => onAdd(input)}>Add</button>
+            <StyledButton onClick={() => onAdd(input)}>Add</StyledButton>
         </>
     )
 }
