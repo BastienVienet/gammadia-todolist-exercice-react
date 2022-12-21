@@ -48,7 +48,7 @@ export const App = () => {
                 <option value="completed">Completed</option>
                 <option value="to_be_done">To be done</option>
             </StyledSelect>
-            <StyledList>
+            <StyledList data-testid={"todo-list"}>
                 {toDoList.map((todo: Todo, index: number) => {
                     return <ToDoItem
                         key={index}

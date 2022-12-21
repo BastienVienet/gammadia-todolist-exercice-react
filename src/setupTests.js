@@ -1,0 +1,1 @@
+// Global file that run before starting all the test

@@ -50,7 +50,10 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}: Props) =
                 </div>
             </StyledListItem>
         ) : (
-            <StyledListItem completed={todo.completed}>
+            <StyledListItem
+                completed={todo.completed}
+                data-testid={"todo-item"}
+            >
                 <StyledCheckbox
                     type="checkbox"
                     checked={todo.completed}

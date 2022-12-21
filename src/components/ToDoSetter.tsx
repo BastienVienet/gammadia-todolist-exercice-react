@@ -14,7 +14,6 @@ export const ToDoSetter = ({onAdd, input, setInput}: Props) => {
             onAdd(input);
         }
     };
-
     return (
         <> {/*same than React.Fragment */}
             <StyledInput onKeyDown={handleEnterPress}
