@@ -56,10 +56,16 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}: Props) =
             >
                 <StyledCheckbox
                     type="checkbox"
+                    name={`todo-${todo.id}`}
+                    id={`todo-${todo.id}`}
                     checked={todo.completed}
                     onChange={() => onCheckToDo(todo.id)}
-                ></StyledCheckbox>
-                <div ref={todoOldTextRef}>{todo.text}</div>
+                />
+                <label htmlFor={`todo-${todo.id}`}>
+                    <div ref={todoOldTextRef}>
+                        {todo.text}
+                    </div>
+                </label>
                 <div className="ml-auto">
                     <StyledButton onClick={() => onDelete(todo.id)}><MdDelete></MdDelete></StyledButton>
                     <StyledButton onClick={() => setIsEditing(true)}><MdEdit></MdEdit></StyledButton>

@@ -11,6 +11,7 @@ const StyledListItem = styled.li<{completed?: boolean }>`
   border-bottom: 1px solid #eee;
   background: white;
   color: black;
+  
   &:nth-child(odd) {
     background-color: #efefef;
   }
@@ -25,6 +26,7 @@ const StyledListItem = styled.li<{completed?: boolean }>`
     justify-content: flex-start;
     align-items: center;
     margin: 0 20px;
+    cursor: pointer;
   }
 `
 
