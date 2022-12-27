@@ -1,4 +1,4 @@
-import {useRef, useState} from "react";
+import {KeyboardEvent, useRef, useState} from "react";
 import {MdCancel, MdDelete, MdEdit, MdSave} from 'react-icons/md'
 import StyledButton from "../styles/Button";
 import StyledListItem from "../styles/ListItem";
@@ -27,6 +27,14 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}: Props) =
     const [isEditing, setIsEditing] = useState(false)
     const todoOldTextRef = useRef(null);
     const inputTextRef = useRef<HTMLInputElement>(null);
+    const handleEnterPress = (event: KeyboardEvent) => {
+        if (event.key === "Enter") {
+            if (!inputTextRef.current) return
+            onEdit(todo.id, inputTextRef.current.value)
+            setIsEditing(false)
+        }
+    };
+
 
     if ((filter === "completed" && !todo.completed) || (filter === "to_be_done" && todo.completed)) {
         return null
@@ -38,6 +46,7 @@ export const ToDoItem = ({todo, onDelete, onEdit, onCheckToDo, filter}: Props) =
                 <MyInput ref={inputTextRef}
                          type="text"
                          defaultValue={todo.text}
+                         onKeyDown={handleEnterPress}
                 />
                 <div className="ml-auto">
                     <StyledButton onClick={() => {
